@@ -52,7 +52,7 @@ This project is an Android application that monitors and displays system informa
 5. **Run the Backend Server**
 
    ```bash
-   python app.py
+   python monitor.py
    ```
 
 ### Android Setup
