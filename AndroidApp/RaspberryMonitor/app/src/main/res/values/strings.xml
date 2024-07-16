@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RaspberryMonitor</string>
-    <string-array name="database_array">
-        <item>ripetizioni</item>
-        <item>altro_db</item>
-    </string-array>
+
+    <string name="nav_db_records">DB Records</string>
+    <string name="nav_system_info">System Info</string>
+    <string name="nav_logout">Logout</string>
 </resources>

@@ -7,6 +7,14 @@ public class User {
     private String cellulare;
     private String provenienza;
 
+    public User(int id, String nome, String cognome, String cellulare, String provenienza) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.cellulare = cellulare;
+        this.provenienza = provenienza;
+    }
+
     // Getters and setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

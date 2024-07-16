@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="database_array">
+        <item>ripetizioni</item>
+        <item>Database2</item>
+    </string-array>
+</resources>

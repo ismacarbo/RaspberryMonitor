@@ -13,6 +13,10 @@ public class MainViewModel extends ViewModel {
         this.token = token;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public LiveData<List<User>> getDbRecords() {
         return repository.getDbRecords();
     }
