@@ -21,8 +21,8 @@ public class MainViewModel extends ViewModel {
         return repository.getSystemInfo();
     }
 
-    public void fetchDbRecords() {
-        repository.fetchDbRecords(token);
+    public void fetchDbRecords(String dbName) {
+        repository.fetchDbRecords(token, dbName);
     }
 
     public void fetchSystemInfo() {

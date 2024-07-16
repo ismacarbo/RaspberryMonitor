@@ -24,8 +24,8 @@ public class Repository {
         return systemInfo;
     }
 
-    public void fetchDbRecords(String token) {
-        RetrofitInstance.getApiService().getDbRecords("Bearer " + token).enqueue(new Callback<DbRecordsResponse>() {
+    public void fetchDbRecords(String token, String dbName) {
+        RetrofitInstance.getApiService().getDbRecords("Bearer " + token, dbName).enqueue(new Callback<DbRecordsResponse>() {
             @Override
             public void onResponse(Call<DbRecordsResponse> call, Response<DbRecordsResponse> response) {
                 if (response.isSuccessful()) {

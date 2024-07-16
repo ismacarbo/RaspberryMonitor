@@ -60,10 +60,37 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fetchDataButton"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/databaseSpinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fetch Data"
-        style="@style/Widget.MaterialComponents.Button" />
+        android:layout_marginBottom="16dp"/>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fetchDataButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fetch Data"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            style="@style/Widget.MaterialComponents.Button"/>
+    </LinearLayout>
 </LinearLayout>

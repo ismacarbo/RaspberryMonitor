@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RaspberryMonitor</string>
+    <string-array name="database_array">
+        <item>ripetizioni</item>
+        <item>altro_db</item>
+    </string-array>
 </resources>
