@@ -7,12 +7,13 @@ This project is an Android application that monitors and displays system informa
 
 - **User Login**: Authenticates users and provides a JWT token for secure access.
 - **System Information**: Fetches CPU temperature, memory usage, disk usage, and power status.
-- **Database Records**: Retrieves and displays records from a MariaDB database.
+- **Database Records**: Retrieves and displays records from a MariaDB database in a tabular format.
+- **Graphical Visualization**: Displays system metrics using graphs for better visualization.
 
 ## Technology Stack
 
 - **Backend**: Flask, Flask-JWT-Extended, Flask-CORS, pymysql, psutil
-- **Frontend**: Android (Java), Material Design Components
+- **Frontend**: Android (Java), Material Design Components, RecyclerView for displaying data in tables
 - **Database**: MariaDB
 
 ## Getting Started
@@ -74,7 +75,8 @@ This project is an Android application that monitors and displays system informa
 ## Usage
 
 1. **Login**: Enter the username and password to authenticate and receive a token.
-2. **Fetch Data**: Click the "Fetch Data" button to retrieve and display the database records and system information.
+2. **Fetch Data**: Select the database from the dropdown and click the "Fetch Data" button to retrieve and display the database records in a table format.
+3. **View System Metrics**: System metrics like CPU temperature, memory usage, and disk usage are displayed using graphs for easy visualization.
 
 ## License
 
