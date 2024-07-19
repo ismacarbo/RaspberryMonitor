@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.DBRecords;
 
 import java.util.List;
 

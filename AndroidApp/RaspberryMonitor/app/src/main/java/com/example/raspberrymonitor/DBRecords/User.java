@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.DBRecords;
 
 public class User {
     private int id;

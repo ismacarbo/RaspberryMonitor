@@ -1,4 +1,6 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.API;
+
+import com.example.raspberrymonitor.API.ApiService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

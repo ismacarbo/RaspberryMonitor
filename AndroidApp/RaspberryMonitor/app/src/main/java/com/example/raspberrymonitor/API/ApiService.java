@@ -1,4 +1,11 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.API;
+
+import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
+import com.example.raspberrymonitor.Login.LoginRequest;
+import com.example.raspberrymonitor.Login.LoginResponse;
+import com.example.raspberrymonitor.Logout.LogoutResponse;
+import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

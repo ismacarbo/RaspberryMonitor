@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Main;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.raspberrymonitor.DBRecords.FragmentDbRecords;
+import com.example.raspberrymonitor.Logout.FragmentLogout;
+import com.example.raspberrymonitor.Movements.FragmentMovements;
+import com.example.raspberrymonitor.R;
+import com.example.raspberrymonitor.SystemInfo.FragmentSystemInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

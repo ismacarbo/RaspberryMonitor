@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Login;
 
 public class LoginRequest {
     private String username;

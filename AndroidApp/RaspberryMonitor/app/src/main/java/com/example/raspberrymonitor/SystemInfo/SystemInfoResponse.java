@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.SystemInfo;
 
 public class SystemInfoResponse {
     private Double temperature;

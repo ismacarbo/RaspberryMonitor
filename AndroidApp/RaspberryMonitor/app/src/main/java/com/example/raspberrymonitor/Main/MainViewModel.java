@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -6,17 +6,10 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-
-import java.util.List;
-
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-
-import java.util.List;
+import com.example.raspberrymonitor.API.Repository;
+import com.example.raspberrymonitor.DBRecords.User;
+import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 
 public class MainViewModel extends ViewModel {
     private Repository repository = new Repository();

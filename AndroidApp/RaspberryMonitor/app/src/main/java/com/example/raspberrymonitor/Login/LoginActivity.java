@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.raspberrymonitor.API.ApiService;
+import com.example.raspberrymonitor.API.RetrofitInstance;
+import com.example.raspberrymonitor.Main.MainActivity;
+import com.example.raspberrymonitor.R;
 
 import java.io.IOException;
 

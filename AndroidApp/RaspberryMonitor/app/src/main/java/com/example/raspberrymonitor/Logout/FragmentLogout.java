@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Logout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.raspberrymonitor.API.ApiService;
+import com.example.raspberrymonitor.API.RetrofitInstance;
+import com.example.raspberrymonitor.Login.LoginActivity;
+import com.example.raspberrymonitor.Main.MainViewModel;
+import com.example.raspberrymonitor.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.API;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +10,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.util.Log;
+
+import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
+import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
+import com.example.raspberrymonitor.DBRecords.User;
 
 public class Repository {
     private static final String TAG = "Repository";

@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.Logout;
 
 public class LogoutResponse {
     private String msg;

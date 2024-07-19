@@ -1,4 +1,4 @@
-package com.example.raspberrymonitor;
+package com.example.raspberrymonitor.SystemInfo;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,9 @@ import android.webkit.WebViewClient;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.raspberrymonitor.Main.MainViewModel;
+import com.example.raspberrymonitor.R;
 
 public class FragmentSystemInfo extends Fragment {
     private MainViewModel viewModel;
