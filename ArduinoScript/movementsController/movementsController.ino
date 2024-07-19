@@ -14,7 +14,8 @@ const char* loginServerName = "https://yourserver.com/login";
 const char* movementsServerName = "https://yourserver.com/api/movements";
 
 // SSL fingerprint of your server (use your server's SSL fingerprint)
-const char* fingerprint = "XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX";
+const char* fingerprint = "XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX";
+
 
 // Store JWT token
 String jwtToken;
