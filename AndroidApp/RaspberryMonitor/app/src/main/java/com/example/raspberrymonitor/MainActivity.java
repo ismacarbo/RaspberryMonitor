@@ -6,12 +6,9 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new FragmentDbRecords();
                     } else if (itemId == R.id.nav_system_info) {
                         selectedFragment = new FragmentSystemInfo();
+                    } else if (itemId == R.id.nav_movements) {
+                        selectedFragment = new FragmentMovements();
                     } else if (itemId == R.id.nav_logout) {
                         selectedFragment = new FragmentLogout();
                     }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_db_records"
@@ -8,6 +7,10 @@
         android:id="@+id/nav_system_info"
 
         android:title="System Info" />
+    <item
+        android:id="@+id/nav_movements"
+
+        android:title="Movements" />
     <item
         android:id="@+id/nav_logout"
 

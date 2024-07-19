@@ -17,6 +17,9 @@ public interface ApiService {
     @GET("/api/system_info")
     Call<SystemInfoResponse> getSystemInfo(@Header("Authorization") String token);
 
+    @GET("/api/movements")
+    Call<MovementsResponse> getMovements(@Header("Authorization") String token);
+
     @POST("/logout")
     Call<LogoutResponse> logout(@Header("Authorization") String token);
 }

@@ -15,6 +15,7 @@ public class Repository {
     private static final String TAG = "Repository";
     private MutableLiveData<List<User>> dbRecords = new MutableLiveData<>();
     private MutableLiveData<SystemInfoResponse> systemInfo = new MutableLiveData<>();
+    private MutableLiveData<List<MovementsResponse.Movement>> movements = new MutableLiveData<>();
 
     public LiveData<List<User>> getDbRecords() {
         return dbRecords;
@@ -22,6 +23,10 @@ public class Repository {
 
     public LiveData<SystemInfoResponse> getSystemInfo() {
         return systemInfo;
+    }
+
+    public LiveData<List<MovementsResponse.Movement>> getMovements() {
+        return movements;
     }
 
     public void fetchDbRecords(String token, String dbName) {
@@ -67,6 +72,35 @@ public class Repository {
             @Override
             public void onFailure(Call<SystemInfoResponse> call, Throwable t) {
                 Log.e(TAG, "Error fetching system info", t);
+            }
+        });
+    }
+
+    public void fetchMovements(String token) {
+        RetrofitInstance.getApiService().getMovements("Bearer " + token).enqueue(new Callback<MovementsResponse>() {
+            @Override
+            public void onResponse(Call<MovementsResponse> call, Response<MovementsResponse> response) {
+                if (response.isSuccessful()) {
+                    MovementsResponse movementsResponse = response.body();
+                    if (movementsResponse != null) {
+                        movements.setValue(movementsResponse.getMovements());
+                        Log.d(TAG, "Movements fetched: " + movementsResponse.getMovements());
+                    } else {
+                        Log.e(TAG, "Response body is null");
+                    }
+                } else {
+                    Log.e(TAG, "Error code: " + response.code() + ", " + response.message());
+                    try {
+                        Log.e(TAG, "Response error body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovementsResponse> call, Throwable t) {
+                Log.e(TAG, "Error fetching movements", t);
             }
         });
     }
