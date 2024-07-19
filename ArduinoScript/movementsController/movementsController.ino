@@ -14,7 +14,7 @@ const char* loginServerName = "https://yourserver.com/login";
 const char* movementsServerName = "https://yourserver.com/api/movements";
 
 // SSL fingerprint of your server (use your server's SSL fingerprint)
-const char* fingerprint = "84:66:2A:D2:4B:EC:E1:D5:F7:B7:6A:A6:09:8B:45:C0:33:A8:0B:F1";
+const char* fingerprint = "XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX";
 
 // Store JWT token
 String jwtToken;
@@ -50,10 +50,19 @@ void loop() {
   int pirState = digitalRead(pirPin);  // Read the state of the PIR sensor
 
   if (pirState == HIGH) {
-    sendMovementDetected();
-    Serial.println("Movement detected!");  // Print message to serial
+    if (!sendMovementDetected()) {
+      // If sending movement data fails due to expired token, try logging in again
+      if (performLogin("admin", "admin")) {
+        Serial.println("Re-login successful");
+        // Try sending the movement data again after re-login
+        sendMovementDetected();
+      } else {
+        Serial.println("Re-login failed");
+      }
+    }
+    Serial.println("Movimento rilevato!");  // Print message to serial
   } else {
-    Serial.println("No movement.");  // Print message to serial
+    Serial.println("Nessun movimento.");  // Print message to serial
   }
 
   delay(10000);  // Pause for 10 seconds between requests
@@ -92,7 +101,7 @@ bool performLogin(const char* username, const char* password) {
   }
 }
 
-void sendMovementDetected() {
+bool sendMovementDetected() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     String url = String(movementsServerName) + "?movement=detected";  // Append query parameter
@@ -101,10 +110,19 @@ void sendMovementDetected() {
     http.addHeader("Authorization", "Bearer " + jwtToken);
     int httpResponseCode = http.GET();
 
-    if (httpResponseCode > 0) {
+    if (httpResponseCode == 200) {
       String response = http.getString();
       Serial.println(httpResponseCode);   // Print response code
       Serial.println(response);           // Print server response
+      http.end();  // Close connection
+      return true;
+    } else if (httpResponseCode == 401) {
+      String response = http.getString();
+      Serial.println(httpResponseCode);   // Print response code
+      Serial.println(response);           // Print server response
+      if (response.indexOf("Token has expired") >= 0) {
+        Serial.println("Token has expired, need to re-login");
+      }
     } else {
       Serial.print("Error on sending GET: ");
       Serial.println(httpResponseCode);
@@ -113,4 +131,5 @@ void sendMovementDetected() {
   } else {
     Serial.println("Error in WiFi connection");
   }
+  return false;
 }
