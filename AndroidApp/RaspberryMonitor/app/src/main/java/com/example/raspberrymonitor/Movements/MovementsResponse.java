@@ -32,5 +32,13 @@ public class MovementsResponse {
         public void setDetail(String detail) {
             this.detail = detail;
         }
+
+        @Override
+        public String toString() {
+            return "Movement{" +
+                    "timestamp='" + timestamp + '\'' +
+                    ", detail='" + detail + '\'' +
+                    '}';
+        }
     }
 }

@@ -4,4 +4,8 @@
     <string name="nav_db_records">DB Records</string>
     <string name="nav_system_info">System Info</string>
     <string name="nav_logout">Logout</string>
+    <string name="db_records">DB Records</string>
+    <string name="system_info">System Info</string>
+    <string name="movements">Movements</string>
+    <string name="logout">Logout</string>
 </resources>

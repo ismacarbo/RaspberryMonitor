@@ -8,8 +8,18 @@
     tools:context=".Movements.FragmentMovements">
 
     <TextView
-        android:id="@+id/movementsTextView"
+        android:id="@+id/timestampTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/detailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:hint="qui"
+        android:paddingBottom="8dp" />
+
 </LinearLayout>

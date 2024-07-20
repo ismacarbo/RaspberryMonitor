@@ -1,18 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_db_records"
-
-        android:title="DB Records" />
+        android:icon="@drawable/icona_db_records"
+        android:title="@string/db_records" />
     <item
         android:id="@+id/nav_system_info"
-
-        android:title="System Info" />
+        android:icon="@drawable/icona_system_info"
+        android:title="@string/system_info" />
     <item
         android:id="@+id/nav_movements"
-
-        android:title="Movements" />
+        android:icon="@drawable/icona_movements"
+        android:title="@string/movements" />
     <item
         android:id="@+id/nav_logout"
-
-        android:title="Logout" />
+        android:icon="@drawable/icona_logout"
+        android:title="@string/logout" />
 </menu>

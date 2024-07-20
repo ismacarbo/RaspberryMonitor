@@ -14,11 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.raspberrymonitor.Main.MainViewModel;
 import com.example.raspberrymonitor.R;
 
-import java.util.List;
-
 public class FragmentMovements extends Fragment {
     private MainViewModel viewModel;
-    private TextView movementsTextView;
+    private TextView timestampTextView;
+    private TextView detailTextView;
 
     public FragmentMovements() {
         // Required empty public constructor
@@ -28,30 +27,26 @@ public class FragmentMovements extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movements, container, false);
-        movementsTextView = view.findViewById(R.id.movementsTextView);
+
+        timestampTextView = view.findViewById(R.id.timestampTextView);
+        detailTextView = view.findViewById(R.id.detailTextView);
 
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
 
-        viewModel.getMovements().observe(getViewLifecycleOwner(), new Observer<List<MovementsResponse.Movement>>() {
+        viewModel.getMovements().observe(getViewLifecycleOwner(), new Observer<MovementsResponse>() {
             @Override
-            public void onChanged(List<MovementsResponse.Movement> movements) {
-                if (movements != null && !movements.isEmpty()) {
-                    StringBuilder sb = new StringBuilder();
-                    for (MovementsResponse.Movement movement : movements) {
-                        sb.append("Timestamp: ").append(movement.getTimestamp()).append("\n");
-                        sb.append("Detail: ").append(movement.getDetail()).append("\n\n");
-                    }
-                    movementsTextView.setText(sb.toString());
+            public void onChanged(MovementsResponse movementsResponse) {
+                if (movementsResponse != null && movementsResponse.getMovements() != null && !movementsResponse.getMovements().isEmpty()) {
+                    // Assuming we are interested in the latest movement
+                    MovementsResponse.Movement latestMovement = movementsResponse.getMovements().get(movementsResponse.getMovements().size() - 1);
+                    timestampTextView.setText("Timestamp: " + latestMovement.getTimestamp());
+                    detailTextView.setText("Detail: " + latestMovement.getDetail());
                 } else {
-                    movementsTextView.setText("No movements detected.");
+                    timestampTextView.setText("No movements detected.");
+                    detailTextView.setText("");
                 }
             }
         });
-
-        String token = viewModel.getToken();
-        if (token != null) {
-            viewModel.fetchMovements(token);
-        }
 
         return view;
     }

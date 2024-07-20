@@ -4,7 +4,6 @@ import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
 import com.example.raspberrymonitor.Login.LoginRequest;
 import com.example.raspberrymonitor.Login.LoginResponse;
 import com.example.raspberrymonitor.Logout.LogoutResponse;
-import com.example.raspberrymonitor.Movements.MovementRequest;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 
@@ -25,8 +24,8 @@ public interface ApiService {
     @GET("/api/system_info")
     Call<SystemInfoResponse> getSystemInfo(@Header("Authorization") String token);
 
-    @POST("/api/movements")
-    Call<MovementsResponse> getMovements(@Header("Authorization") String token, @Body MovementRequest movementRequest);
+    @GET("/api/get_movements")
+    Call<MovementsResponse> getMovements(@Header("Authorization") String token);
 
     @POST("/logout")
     Call<LogoutResponse> logout(@Header("Authorization") String token);

@@ -2,6 +2,7 @@ package com.example.raspberrymonitor.Main;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.raspberrymonitor.DBRecords.FragmentDbRecords;
 import com.example.raspberrymonitor.Logout.FragmentLogout;
 import com.example.raspberrymonitor.Movements.FragmentMovements;
+import com.example.raspberrymonitor.Movements.MovementsResponse;
 import com.example.raspberrymonitor.R;
 import com.example.raspberrymonitor.SystemInfo.FragmentSystemInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private Handler handler;
     private Runnable runnable;
-    private final int UPDATE_INTERVAL = 5000;
+    private final int UPDATE_INTERVAL = 5000; // 5 seconds for testing purposes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 viewModel.fetchSystemInfo();
-                viewModel.fetchMovements(viewModel.getToken()); // Fetch movements data
+                viewModel.fetchMovements(); // Fetch movements data
+
+
                 handler.postDelayed(this, UPDATE_INTERVAL);
             }
         };

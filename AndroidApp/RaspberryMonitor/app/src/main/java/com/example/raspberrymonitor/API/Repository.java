@@ -15,13 +15,12 @@ import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 import com.example.raspberrymonitor.DBRecords.User;
-import com.example.raspberrymonitor.Movements.MovementRequest;
 
 public class Repository {
     private static final String TAG = "Repository";
     private MutableLiveData<List<User>> dbRecords = new MutableLiveData<>();
     private MutableLiveData<SystemInfoResponse> systemInfo = new MutableLiveData<>();
-    private MutableLiveData<List<MovementsResponse.Movement>> movements = new MutableLiveData<>();
+    private MutableLiveData<MovementsResponse> movements = new MutableLiveData<>();
 
     public LiveData<List<User>> getDbRecords() {
         return dbRecords;
@@ -31,7 +30,7 @@ public class Repository {
         return systemInfo;
     }
 
-    public LiveData<List<MovementsResponse.Movement>> getMovements() {
+    public LiveData<MovementsResponse> getMovements() {
         return movements;
     }
 
@@ -83,25 +82,13 @@ public class Repository {
     }
 
     public void fetchMovements(String token) {
-        MovementRequest movementRequest = new MovementRequest("Example movement data");
-        RetrofitInstance.getApiService().getMovements("Bearer " + token, movementRequest).enqueue(new Callback<MovementsResponse>() {
+        RetrofitInstance.getApiService().getMovements("Bearer " + token).enqueue(new Callback<MovementsResponse>() {
             @Override
             public void onResponse(Call<MovementsResponse> call, Response<MovementsResponse> response) {
                 if (response.isSuccessful()) {
-                    MovementsResponse movementsResponse = response.body();
-                    if (movementsResponse != null) {
-                        movements.setValue(movementsResponse.getMovements());
-                        Log.d(TAG, "Movements fetched: " + movementsResponse.getMovements());
-                    } else {
-                        Log.e(TAG, "Response body is null");
-                    }
+                    movements.setValue(response.body());
                 } else {
                     Log.e(TAG, "Error code: " + response.code() + ", " + response.message());
-                    try {
-                        Log.e(TAG, "Response error body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-
 import com.example.raspberrymonitor.API.Repository;
 import com.example.raspberrymonitor.DBRecords.User;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
@@ -31,7 +30,7 @@ public class MainViewModel extends ViewModel {
         return repository.getSystemInfo();
     }
 
-    public LiveData<List<MovementsResponse.Movement>> getMovements() {
+    public LiveData<MovementsResponse> getMovements() {
         return repository.getMovements();
     }
 
@@ -43,7 +42,7 @@ public class MainViewModel extends ViewModel {
         repository.fetchSystemInfo(token);
     }
 
-    public void fetchMovements(String token) {
+    public void fetchMovements() {
         repository.fetchMovements(token);
     }
 }
