@@ -6,16 +6,15 @@
 const int pirPin = D2;   // Pin of the PIR sensor
 
 // WiFi configuration
-const char* ssid = "Your_SSID";
-const char* password = "Your_PASSWORD";
+const char* ssid = "your_ssid";
+const char* password = "your_password";
 
 // Flask endpoints
 const char* loginServerName = "https://yourserver.com/login";
 const char* movementsServerName = "https://yourserver.com/api/movements";
 
 // SSL fingerprint of your server (use your server's SSL fingerprint)
-const char* fingerprint = "XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX";
-
+const char* fingerprint = "your_server_fingerprint";
 
 // Store JWT token
 String jwtToken;
@@ -40,7 +39,7 @@ void setup() {
   client.setFingerprint(fingerprint);
 
   // Perform login to obtain JWT token
-  if (performLogin("admin", "admin")) {
+  if (performLogin("your_username", "your_password")) {
     Serial.println("Login successful");
   } else {
     Serial.println("Login failed");
@@ -53,7 +52,7 @@ void loop() {
   if (pirState == HIGH) {
     if (!sendMovementDetected()) {
       // If sending movement data fails due to expired token, try logging in again
-      if (performLogin("admin", "admin")) {
+      if (performLogin("your_username", "your_password")) {
         Serial.println("Re-login successful");
         // Try sending the movement data again after re-login
         sendMovementDetected();
@@ -61,12 +60,12 @@ void loop() {
         Serial.println("Re-login failed");
       }
     }
-    Serial.println("Movimento rilevato!");  // Print message to serial
+    Serial.println("Movement detected!");  // Print message to serial
   } else {
-    Serial.println("Nessun movimento.");  // Print message to serial
+    Serial.println("No movement.");  // Print message to serial
   }
 
-  delay(10000);  // Pause for 10 seconds between requests
+  delay(1000);  // Pause for 10 seconds between requests
 }
 
 bool performLogin(const char* username, const char* password) {
@@ -105,11 +104,12 @@ bool performLogin(const char* username, const char* password) {
 bool sendMovementDetected() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    String url = String(movementsServerName) + "?movement=detected";  // Append query parameter
-    http.begin(client, url);  // Use updated API
+    http.begin(client, movementsServerName);  // Use updated API
 
+    http.addHeader("Content-Type", "application/json");
     http.addHeader("Authorization", "Bearer " + jwtToken);
-    int httpResponseCode = http.GET();
+    String payload = "{\"movement\": \"detected\"}";
+    int httpResponseCode = http.POST(payload);
 
     if (httpResponseCode == 200) {
       String response = http.getString();
@@ -125,7 +125,7 @@ bool sendMovementDetected() {
         Serial.println("Token has expired, need to re-login");
       }
     } else {
-      Serial.print("Error on sending GET: ");
+      Serial.print("Error on sending POST: ");
       Serial.println(httpResponseCode);
     }
     http.end();  // Close connection
