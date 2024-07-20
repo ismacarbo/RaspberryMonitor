@@ -15,6 +15,7 @@ import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 import com.example.raspberrymonitor.DBRecords.User;
+import com.example.raspberrymonitor.Movements.MovementRequest;
 
 public class Repository {
     private static final String TAG = "Repository";
@@ -82,7 +83,8 @@ public class Repository {
     }
 
     public void fetchMovements(String token) {
-        RetrofitInstance.getApiService().getMovements("Bearer " + token).enqueue(new Callback<MovementsResponse>() {
+        MovementRequest movementRequest = new MovementRequest("Example movement data");
+        RetrofitInstance.getApiService().getMovements("Bearer " + token, movementRequest).enqueue(new Callback<MovementsResponse>() {
             @Override
             public void onResponse(Call<MovementsResponse> call, Response<MovementsResponse> response) {
                 if (response.isSuccessful()) {

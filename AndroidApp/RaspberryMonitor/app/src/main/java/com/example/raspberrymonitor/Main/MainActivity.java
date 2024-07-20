@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private Handler handler;
     private Runnable runnable;
-    private final int UPDATE_INTERVAL = 10000; // 10 seconds
+    private final int UPDATE_INTERVAL = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 viewModel.fetchSystemInfo();
+                viewModel.fetchMovements(viewModel.getToken()); // Fetch movements data
                 handler.postDelayed(this, UPDATE_INTERVAL);
             }
         };

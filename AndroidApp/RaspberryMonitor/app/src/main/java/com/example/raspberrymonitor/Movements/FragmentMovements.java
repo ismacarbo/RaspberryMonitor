@@ -42,6 +42,8 @@ public class FragmentMovements extends Fragment {
                         sb.append("Detail: ").append(movement.getDetail()).append("\n\n");
                     }
                     movementsTextView.setText(sb.toString());
+                } else {
+                    movementsTextView.setText("No movements detected.");
                 }
             }
         });
