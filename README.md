@@ -95,6 +95,7 @@ The weather radar feature provides real-time weather information including wind 
 3. **Access the Weather Radar**
 
    Navigate to `http://your-server-ip:5000/weather` to view the weather radar.
+   The weather radar is also accessible at: [https://ismacarbo.zapto.org/weather](https://ismacarbo.zapto.org/weather).
 
 ## Usage
 
