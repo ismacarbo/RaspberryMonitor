@@ -1,7 +1,7 @@
 const openWeatherApiKey = ''; // Replace with your OpenWeather API key
 
 let options = {
-    key: '', // Replace with your Windy API key
+    key: '', // Replace with your OpenWeather API key
     verbose: true,
     overlay: 'wind', // Default overlay
     zoom: 5,
