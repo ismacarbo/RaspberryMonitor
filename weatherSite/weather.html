@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ismacarbo's weather radar</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+</head>
+<body>
+    <div id="windy"></div>
+    <div class="controls">
+        <div class="button-group">
+            <button onclick="changeOverlay('wind')">Wind</button>
+            <button onclick="changeOverlay('temp')">Temperature</button>
+            <button onclick="changeOverlay('pressure')">Pressure</button>
+            <button onclick="changeOverlay('radar')">Radar</button>
+        </div>
+        <div class="wind-speed" id="windSpeedContainer" style="display:none;">
+            <label for="windSpeed">Wind Speed: <span id="windSpeedValue">0</span> <span id="windSpeedUnit">m/s</span></label>
+            <label for="unitSelect">Unit:</label>
+            <select id="unitSelect" onchange="updateWindSpeedUnit()">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="mph">mph</option>
+            </select>
+        </div>
+        <div class="temperature" id="temperatureContainer" style="display:none;">
+            <label for="temperature">Temperature: <span id="temperatureValue">0</span> <span id="temperatureUnit">°C</span></label>
+            <label for="tempUnitSelect">Unit:</label>
+            <select id="tempUnitSelect" onchange="updateTemperatureUnit()">
+                <option value="C">°C</option>
+                <option value="F">°F</option>
+            </select>
+        </div>
+        <div class="pressure" id="pressureContainer" style="display:none;">
+            <label for="pressure">Pressure: <span id="pressureValue">0</span> <span id="pressureUnit">hPa</span></label>
+            <label for="pressureUnitSelect">Unit:</label>
+            <select id="pressureUnitSelect" onchange="updatePressureUnit()">
+                <option value="hPa">hPa</option>
+                <option value="inHg">inHg</option>
+            </select>
+        </div>
+    </div>
+    <img id="radarImage" src="/static/marker1.jpg" class="radar-image" style="display:none;" />
+    <div class="copyright-label">© ismacarbo</div>
+    <script src="scripts.js"></script>
+</body>
+</html>
