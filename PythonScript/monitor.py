@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, request, send_from_directory
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
@@ -15,17 +14,17 @@ CORS(app)
 
 # MariaDB connection configuration
 db_configs = {
-    'database1': {
+    'ripetizioni': {
         'user': 'your_db_user',
         'password': 'your_db_password',
-        'host': 'your_db_host',
-        'database': 'your_database_name',
+        'host': 'localhost',
+        'database': 'ripetizioni',
     },
-    'database2': {
+    'altro_db': {
         'user': 'your_db_user',
         'password': 'your_db_password',
-        'host': 'your_db_host',
-        'database': 'your_database_name',
+        'host': 'localhost',
+        'database': 'altro_db',
     }
 }
 
@@ -38,12 +37,15 @@ def verify_user(username, password):
 
 @app.route('/login', methods=['POST'])
 def login():
+    print("Login endpoint hit")
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
+    app.logger.debug('Received login request: username=%s, password=%s', username, password)
+    
     if not username or not password:
         return jsonify({"msg": "Missing username or password"}), 400
     
@@ -56,12 +58,14 @@ def login():
 @app.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
+    print("Logout endpoint hit")
     return jsonify({"msg": "Successfully logged out"}), 200
 
 @app.route('/api/db_records', methods=['GET'])
 @jwt_required()
 def db_records():
-    db_name = request.args.get('db', 'database1')
+    app.logger.debug('Received request for /api/db_records with JWT identity: %s', get_jwt_identity())
+    db_name = request.args.get('db', 'ripetizioni')
     if db_name not in db_configs:
         return jsonify({"msg": "Invalid database name"}), 400
     records = get_db_records(db_configs[db_name])
@@ -76,6 +80,8 @@ def system_info():
 @app.route('/api/movements', methods=['POST'])
 @jwt_required()
 def record_movement():
+    app.logger.debug('Received movement data with JWT identity: %s', get_jwt_identity())
+    
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
@@ -106,11 +112,16 @@ def weather():
 def serve_static(filename):
     return send_from_directory('static', filename)
 
+@app.route('/api/network', methods=['GET'])
+@jwt_required()
+def network_info():
+    network_data = get_network_data()
+    return jsonify(network_data)
 
 def get_db_records(db_config):
     conn = pymysql.connect(**db_config)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users")
+    cursor.execute("SELECT * FROM utenti")
     rows = cursor.fetchall()
     columns = [desc[0] for desc in cursor.description]
     records = [dict(zip(columns, row)) for row in rows]
@@ -159,5 +170,20 @@ def interpret_throttled(value):
     
     return ', '.join(explanations)
 
+def get_network_data():
+    data = {
+        'interfaces': {},
+        'total_bytes_sent': psutil.net_io_counters().bytes_sent,
+        'total_bytes_recv': psutil.net_io_counters().bytes_recv
+    }
+    for interface, addrs in psutil.net_if_addrs().items():
+        data['interfaces'][interface] = {
+            'sent': psutil.net_io_counters(pernic=True)[interface].bytes_sent,
+            'recv': psutil.net_io_counters(pernic=True)[interface].bytes_recv
+        }
+    
+    return data
+
 if __name__ == '__main__':
+    print("Starting Flask server...")
     app.run(host='0.0.0.0', port=5000)
