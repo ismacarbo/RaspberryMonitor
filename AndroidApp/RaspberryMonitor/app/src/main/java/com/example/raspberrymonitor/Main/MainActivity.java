@@ -15,6 +15,7 @@ import com.example.raspberrymonitor.Movements.FragmentMovements;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
 import com.example.raspberrymonitor.R;
 import com.example.raspberrymonitor.SystemInfo.FragmentSystemInfo;
+import com.example.raspberrymonitor.Network.FragmentNetworkInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 viewModel.fetchSystemInfo();
                 viewModel.fetchMovements(); // Fetch movements data
-
+                viewModel.fetchNetworkInfo(); // Fetch network data
 
                 handler.postDelayed(this, UPDATE_INTERVAL);
             }
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new FragmentSystemInfo();
                     } else if (itemId == R.id.nav_movements) {
                         selectedFragment = new FragmentMovements();
+                    } else if (itemId == R.id.nav_network_info) {
+                        selectedFragment = new FragmentNetworkInfo();
                     } else if (itemId == R.id.nav_logout) {
                         selectedFragment = new FragmentLogout();
                     }

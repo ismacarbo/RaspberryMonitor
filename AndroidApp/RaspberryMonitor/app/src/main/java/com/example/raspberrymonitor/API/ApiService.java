@@ -5,6 +5,7 @@ import com.example.raspberrymonitor.Login.LoginRequest;
 import com.example.raspberrymonitor.Login.LoginResponse;
 import com.example.raspberrymonitor.Logout.LogoutResponse;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.Network.NetworkInfoResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 
 import retrofit2.Call;
@@ -26,6 +27,9 @@ public interface ApiService {
 
     @GET("/api/get_movements")
     Call<MovementsResponse> getMovements(@Header("Authorization") String token);
+
+    @GET("/api/network")
+    Call<NetworkInfoResponse> getNetworkInfo(@Header("Authorization") String token);
 
     @POST("/logout")
     Call<LogoutResponse> logout(@Header("Authorization") String token);

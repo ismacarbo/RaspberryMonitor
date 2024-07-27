@@ -8,6 +8,7 @@ import java.util.List;
 import com.example.raspberrymonitor.API.Repository;
 import com.example.raspberrymonitor.DBRecords.User;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.Network.NetworkInfoResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 
 public class MainViewModel extends ViewModel {
@@ -34,6 +35,10 @@ public class MainViewModel extends ViewModel {
         return repository.getMovements();
     }
 
+    public LiveData<NetworkInfoResponse> getNetworkInfo() {
+        return repository.getNetworkInfo();
+    }
+
     public void fetchDbRecords(String dbName) {
         repository.fetchDbRecords(token, dbName);
     }
@@ -44,5 +49,9 @@ public class MainViewModel extends ViewModel {
 
     public void fetchMovements() {
         repository.fetchMovements(token);
+    }
+
+    public void fetchNetworkInfo() {
+        repository.fetchNetworkInfo(token);
     }
 }

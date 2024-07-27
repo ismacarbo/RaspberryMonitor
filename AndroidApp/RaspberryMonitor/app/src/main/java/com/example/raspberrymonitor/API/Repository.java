@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.example.raspberrymonitor.DBRecords.DbRecordsResponse;
 import com.example.raspberrymonitor.Movements.MovementsResponse;
+import com.example.raspberrymonitor.Network.NetworkInfoResponse;
 import com.example.raspberrymonitor.SystemInfo.SystemInfoResponse;
 import com.example.raspberrymonitor.DBRecords.User;
 
@@ -21,6 +22,7 @@ public class Repository {
     private MutableLiveData<List<User>> dbRecords = new MutableLiveData<>();
     private MutableLiveData<SystemInfoResponse> systemInfo = new MutableLiveData<>();
     private MutableLiveData<MovementsResponse> movements = new MutableLiveData<>();
+    private MutableLiveData<NetworkInfoResponse> networkInfo = new MutableLiveData<>();
 
     public LiveData<List<User>> getDbRecords() {
         return dbRecords;
@@ -32,6 +34,10 @@ public class Repository {
 
     public LiveData<MovementsResponse> getMovements() {
         return movements;
+    }
+
+    public LiveData<NetworkInfoResponse> getNetworkInfo() {
+        return networkInfo;
     }
 
     public void fetchDbRecords(String token, String dbName) {
@@ -98,4 +104,29 @@ public class Repository {
             }
         });
     }
+
+    public void fetchNetworkInfo(String token) {
+        RetrofitInstance.getApiService().getNetworkInfo("Bearer " + token).enqueue(new Callback<NetworkInfoResponse>() {
+            @Override
+            public void onResponse(Call<NetworkInfoResponse> call, Response<NetworkInfoResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    networkInfo.setValue(response.body());
+                    Log.d(TAG, "Network info fetched: " + response.body().toString());
+                } else {
+                    Log.e(TAG, "Error code: " + response.code() + ", " + response.message());
+                    try {
+                        Log.e(TAG, "Response error body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NetworkInfoResponse> call, Throwable t) {
+                Log.e(TAG, "Erro r fetching network info", t);
+            }
+        });
+    }
+
 }

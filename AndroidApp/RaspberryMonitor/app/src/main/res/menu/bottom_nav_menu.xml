@@ -12,6 +12,10 @@
         android:icon="@drawable/icona_movements"
         android:title="@string/movements" />
     <item
+        android:id="@+id/nav_network_info"
+        android:icon="@drawable/icona_network"
+        android:title="Network" />
+    <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/icona_logout"
         android:title="@string/logout" />

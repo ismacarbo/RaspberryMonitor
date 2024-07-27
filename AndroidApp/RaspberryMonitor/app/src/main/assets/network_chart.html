@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<canvas id="networkSentChart" width="400" height="200"></canvas>
+<canvas id="networkRecvChart" width="400" height="200"></canvas>
+
+<script>
+    const networkSentCtx = document.getElementById('networkSentChart').getContext('2d');
+    const networkRecvCtx = document.getElementById('networkRecvChart').getContext('2d');
+
+    let networkSentChart = new Chart(networkSentCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Bytes Sent',
+                data: [],
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    let networkRecvChart = new Chart(networkRecvCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Bytes Received',
+                data: [],
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function updateNetworkCharts(sent, recv) {
+        const now = new Date().toLocaleTimeString();
+
+        networkSentChart.data.labels.push(now);
+        networkSentChart.data.datasets[0].data.push(sent);
+        networkSentChart.update();
+
+        networkRecvChart.data.labels.push(now);
+        networkRecvChart.data.datasets[0].data.push(recv);
+        networkRecvChart.update();
+    }
+</script>
+</body>
+</html>
