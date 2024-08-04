@@ -11,11 +11,12 @@ This project is an Android application that monitors and displays system informa
 - **Graphical Visualization**: Displays system metrics using graphs for better visualization.
 - **Movement Logs**: Fetches and displays logs of movements detected by an Arduino-based setup.
 - **Weather Radar**: Displays weather information including wind, temperature, pressure, and radar overlays using OpenWeather API and Windy.com.
+- **Network Information**: Monitors network traffic and displays total bytes sent and received, along with per-interface statistics.
 
 ## Technology Stack
 
 - **Backend**: Flask, Flask-JWT-Extended, Flask-CORS, pymysql, psutil
-- **Frontend**: Android (Java), Material Design Components, RecyclerView for displaying data in tables
+- **Frontend**: Android (Java), Material Design Components, RecyclerView for displaying data in tables, WebView for charts
 - **Database**: MariaDB
 - **Weather Visualization**: Windy API, Leaflet.js
 
@@ -76,6 +77,7 @@ This project is an Android application that monitors and displays system informa
 - **GET /api/system_info**: Returns system information. Requires JWT.
 - **POST /api/movements**: Records a new movement log. Requires JWT.
 - **GET /api/get_movements**: Returns movement logs detected by the Arduino setup. Requires JWT.
+- **GET /api/network**: Returns network information including total bytes sent and received, and per-interface statistics. Requires JWT.
 - **GET /weather**: Serves the weather radar HTML page.
 
 ### Weather Radar
@@ -104,6 +106,7 @@ The weather radar feature provides real-time weather information including wind 
 3. **View System Metrics**: System metrics like CPU temperature, memory usage, and disk usage are displayed using graphs for easy visualization.
 4. **View Movement Logs**: Access the "Movements" section to view logs of movements detected by the Arduino-based setup.
 5. **Weather Radar**: View real-time weather information on the weather radar page.
+6. **Network Information**: View network traffic details including total bytes sent and received, and per-interface statistics.
 
 ## License
 
