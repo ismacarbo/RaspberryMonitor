@@ -54,4 +54,6 @@ public class MainViewModel extends ViewModel {
     public void fetchNetworkInfo() {
         repository.fetchNetworkInfo(token);
     }
+
+
 }

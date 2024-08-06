@@ -16,6 +16,7 @@ public class MovementsResponse {
     public static class Movement {
         private String timestamp;
         private String detail;
+        private String ip;
 
         public String getTimestamp() {
             return timestamp;
@@ -33,11 +34,20 @@ public class MovementsResponse {
             this.detail = detail;
         }
 
+        public String getIp() {
+            return ip;
+        }
+
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
+
         @Override
         public String toString() {
             return "Movement{" +
                     "timestamp='" + timestamp + '\'' +
                     ", detail='" + detail + '\'' +
+                    ", ip='" + ip + '\'' +
                     '}';
         }
     }

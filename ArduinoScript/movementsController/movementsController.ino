@@ -5,12 +5,12 @@
 #include <WiFiClientSecure.h>
 
 // Configurazione WiFi
-const char* ssid = "YOUR_SSID";
-const char* password = "YOUR_PASSWORD";
+const char* ssid = "Telecom casa";
+const char* password = "40166575";
 
 // Endpoint del server Flask
-const char* loginServerName = "https://yourserver.com/login";
-const char* movementsServerName = "https://yourserver.com/api/movements";
+const char* loginServerName = "https://ismacarbo.zapto.org/login";
+const char* movementsServerName = "https://ismacarbo.zapto.org/api/movements";
 
 // Token JWT
 String jwtToken;
@@ -42,6 +42,10 @@ camera_fb_t* previousFrame = NULL; // Memorizza il frame precedente per il rilev
 WebServer server(80);
 
 void startCameraServer();
+bool performLogin(const char* username, const char* password);
+bool sendMovementDetected();
+bool detectMotion(camera_fb_t * frame);
+void reduceNoise(camera_fb_t* frame);
 
 void setup() {
   Serial.begin(115200);
@@ -92,6 +96,16 @@ void setup() {
     return;
   }
 
+  // Configurazione sensore per migliorare la qualità dell'immagine
+  sensor_t * s = esp_camera_sensor_get();
+  s->set_gain_ctrl(s, 1);    // Abilita il controllo del guadagno
+  s->set_exposure_ctrl(s, 1); // Abilita il controllo dell'esposizione
+  s->set_whitebal(s, 1);     // Abilita il bilanciamento del bianco
+  s->set_brightness(s, 1);   // Regola la luminosità (-2 a 2)
+  s->set_contrast(s, 1);     // Regola il contrasto (-2 a 2)
+  s->set_saturation(s, 1);   // Regola la saturazione (-2 a 2)
+  s->set_sharpness(s, 1);    // Regola la nitidezza (0 a 3)
+
   // Effettua il login per ottenere il token JWT
   if (performLogin("admin", "admin")) {
     Serial.println("Login riuscito");
@@ -111,9 +125,12 @@ void loop() {
     return;
   }
 
+  // Riduzione del rumore
+  reduceNoise(fb);
+
   // Esegue il rilevamento del movimento
   bool motionDetected = detectMotion(fb);
-  
+
   if (motionDetected) {
     if (!sendMovementDetected()) {
       // Se l'invio dei dati di movimento fallisce a causa di un token scaduto, prova a effettuare nuovamente il login
@@ -277,7 +294,7 @@ bool sendMovementDetected() {
 
     http.addHeader("Content-Type", "application/json");
     http.addHeader("Authorization", "Bearer " + jwtToken);
-    String payload = "{\"movement\": \"detected\"}";
+    String payload = "{\"movement\": \"detected\", \"ip\": \"" + WiFi.localIP().toString() + "\"}";
     int httpResponseCode = http.POST(payload);
 
     Serial.print("Codice di risposta HTTP: ");
@@ -305,4 +322,43 @@ bool sendMovementDetected() {
     Serial.println("Errore nella connessione WiFi");
   }
   return false;
+}
+
+void reduceNoise(camera_fb_t* frame) {
+  // Implementa un algoritmo di riduzione del rumore, ad esempio, un filtro mediano
+  int width = 320;  // Imposta la larghezza dell'immagine
+  int height = 240; // Imposta l'altezza dell'immagine
+  uint8_t* buffer = frame->buf;
+
+  for (int y = 1; y < height - 1; y++) {
+    for (int x = 1; x < width - 1; x++) {
+      int pixelIndex = y * width + x;
+      
+      // Calcola i valori mediani
+      uint8_t neighborhood[9];
+      neighborhood[0] = buffer[pixelIndex - width - 1];
+      neighborhood[1] = buffer[pixelIndex - width];
+      neighborhood[2] = buffer[pixelIndex - width + 1];
+      neighborhood[3] = buffer[pixelIndex - 1];
+      neighborhood[4] = buffer[pixelIndex];
+      neighborhood[5] = buffer[pixelIndex + 1];
+      neighborhood[6] = buffer[pixelIndex + width - 1];
+      neighborhood[7] = buffer[pixelIndex + width];
+      neighborhood[8] = buffer[pixelIndex + width + 1];
+      
+      // Ordina il quartiere
+      for (int i = 0; i < 9; i++) {
+        for (int j = i + 1; j < 9; j++) {
+          if (neighborhood[j] < neighborhood[i]) {
+            uint8_t temp = neighborhood[i];
+            neighborhood[i] = neighborhood[j];
+            neighborhood[j] = temp;
+          }
+        }
+      }
+      
+      // Sostituisci il valore del pixel con il valore mediano
+      buffer[pixelIndex] = neighborhood[4];
+    }
+  }
 }
