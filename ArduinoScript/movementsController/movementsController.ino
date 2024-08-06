@@ -5,12 +5,12 @@
 #include <WiFiClientSecure.h>
 
 // Configurazione WiFi
-const char* ssid = "Telecom casa";
-const char* password = "40166575";
+const char* ssid = "your_wifi_ssid";
+const char* password = "your_wifi_password";
 
 // Endpoint del server Flask
-const char* loginServerName = "https://ismacarbo.zapto.org/login";
-const char* movementsServerName = "https://ismacarbo.zapto.org/api/movements";
+const char* loginServerName = "https://example.com/login";
+const char* movementsServerName = "https://example.com/api/movements";
 
 // Token JWT
 String jwtToken;
